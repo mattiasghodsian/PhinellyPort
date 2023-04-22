@@ -10,7 +10,7 @@ Generating temporary m3u8 file(s) from a directory containgin audio files. The m
 ### For Directories with Subdirectories
 Use the following command for generating m3u8 files from a directory that includes subdirectories:
 ```sh
-./generate_directorys_to_playlists.sh [music_folder]
+./directories_to_playlists.sh [music_folder]
 ```
 ### For a Single Directory
 Use the following command for generating an m3u8 file from a single directory:
