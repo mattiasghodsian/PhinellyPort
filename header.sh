@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# Name: PhinellyPort
 # Author: Mattias Ghodsian
 # License: MIT License
-# url: https://github.com/mattiasghodsian/PhinellyPort
+# Url: https://github.com/mattiasghodsian/PhinellyPort
 
 clear
 echo -e "\033[1m\033[32m
