@@ -9,7 +9,7 @@ source header.sh
 
 # Usage: ./jellyfin_playlist_import.sh <input_file> <optional: playlist_id> <host> <userid> <apikey>
 if [ "$#" -ne 5 ]; then
-    echo "Usage: ./jellyfin_playlist.sh <input_file> <playlist_id> <host> <userid> <apikey>"
+    echo "Usage: ./jellyfin_playlist.sh <input_file> <optional: playlist_id> <host> <userid> <apikey>"
     exit 1
 fi
 
