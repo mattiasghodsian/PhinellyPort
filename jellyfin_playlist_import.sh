@@ -38,6 +38,16 @@ urlencode() {
     LC_COLLATE=$old_lc_collate
 }
 
+split_array() {
+    local array=("${!1}")
+    local chunk_size=$2
+    local i=0
+    while [ $i -lt ${#array[@]} ]; do
+        echo "${array[@]:$i:$chunk_size}"
+        i=$((i + chunk_size))
+    done
+}
+
 # Check if the playlist exists
 playlist_status=$(curl -s -o /dev/null -w "%{http_code}" "${playlist_url}")
 
@@ -63,21 +73,29 @@ if [ "${playlist_status}" -eq 200 ]; then
                 item_id=$(echo "${track_response}" | jq -r '.Items[0].Id')
                 item_ids+=("${item_id}")
             else
-                echo "Error: Failed to fetch track details for '${media_track_name}'"
+                echo "Failed to fetch: '${media_file_name}'"
             fi
-            sleep 0.5
+            # sleep 0.3
         fi
     done < "$input_file"
-
-    sleep 1
 
     if [ ${#item_ids[@]} -eq 0 ]; then
         echo "No items were added to the playlist."
     else
-        item_ids_string=$(IFS=,; echo "${item_ids[*]}")
-        post_url="${playlist_url}&ids=${item_ids_string}"
-        curl -s -X POST -H "Content-Type: application/json" -d '{}' "${post_url}" -w "\n%{http_code}\n"
-
+        IFS=$'\n' read -ra item_chunks -d '' <<< "$(split_array item_ids[@] 100; echo)"
+        for chunk in "${item_chunks[@]}"; do
+            IFS=$' ' read -ra items <<< "${chunk}"
+            item_ids_string=$(IFS=,; echo "${items[*]}")
+            post_url="${playlist_url}&ids=${item_ids_string}"
+            response=$(curl -s -X POST -H "Content-Type: application/json" -d '{}' "${post_url}" -w "%{http_code}")
+            
+            if [ "$response" -eq 204 ]; then
+                echo "Success: Imported chunk"
+            else
+                echo "Error: Failed to import chunk, code: $response"
+            fi
+            sleep 0.3
+        done
     fi
 
 else
