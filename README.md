@@ -5,7 +5,7 @@
 PhinellyPort is a collection of tools designed to enhance your media library experience, by offering playlist generation, duplicate file removal outside of Jellyfin media server, and seamless integration with Jellyfin through its API for importing playlists.
 
 ## How to
-Generating temporary m3u8 file(s) from a directory containgin audio files. The m3u8 files will be saved there you stand in the terminal.
+Generating temporary m3u8 files from a directory that contains audio files. The generated m3u8 files will be saved in the terminal's current working directory.
 
 ### For Directories with Subdirectories
 Use the following command for generating m3u8 files from a directory that includes subdirectories:
