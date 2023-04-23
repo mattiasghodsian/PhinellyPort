@@ -7,20 +7,11 @@
 
 source header.sh
 
-# Usage: ./jellyfin_playlist_import.sh <input_file> <playlist_id> <host> <userid> <apikey>
+# Usage: ./jellyfin_playlist_import.sh <input_file> <optional: playlist_id> <host> <userid> <apikey>
 if [ "$#" -ne 5 ]; then
     echo "Usage: ./jellyfin_playlist.sh <input_file> <playlist_id> <host> <userid> <apikey>"
     exit 1
 fi
-
-input_file="$1"
-playlist_id="$2"
-host="$3"
-userid="$4"
-apikey="$5"
-
-track_query_url="https://${host}/Items?UserId=${userid}&format=json&api_key=${apikey}&Recursive=true&IncludeItemTypes=Audio%2CMusicAlbum%2CMusicArtist&SearchTerm="
-playlist_url="https://${host}/Playlists/${playlist_id}/Items?UserId=${userid}&api_key=${apikey}"
 
 urlencode() {
     old_lc_collate=$LC_COLLATE
@@ -48,7 +39,27 @@ split_array() {
     done
 }
 
-# Check if the playlist exists
+input_file="$1"
+playlist_id="$2"
+host="$3"
+userid="$4"
+apikey="$5"
+
+# If playlist_id is an empty string, create a new playlist if playlist_id based on input_file
+if [ -z "$playlist_id" ]; then
+    input_file_name=$(basename "$input_file")
+    playlist_name="${input_file_name%.*}"
+    create_playlist_url="https://${host}/Playlists?Name=$(urlencode "${playlist_name}")&UserId=${userid}&api_key=${apikey}"
+    create_playlist_response=$(curl -s -X POST -H "Content-Type: application/json" -d '{}' "${create_playlist_url}")
+    playlist_id=$(echo "${create_playlist_response}" | jq -r '.Id')
+    if [ -z "$playlist_id" ]; then
+        echo "Failed to create new playlist."
+        exit 1
+    fi
+fi
+
+track_query_url="https://${host}/Items?UserId=${userid}&format=json&api_key=${apikey}&Recursive=true&IncludeItemTypes=Audio%2CMusicAlbum%2CMusicArtist&SearchTerm="
+playlist_url="https://${host}/Playlists/${playlist_id}/Items?UserId=${userid}&api_key=${apikey}"
 playlist_status=$(curl -s -o /dev/null -w "%{http_code}" "${playlist_url}")
 
 if [ "${playlist_status}" -eq 200 ]; then
