@@ -30,17 +30,23 @@ To remove duplicate audio files within a directory that includes subdirectories,
 ```
 
 ### Import Playlist to Jellyfin
-To import a playlist to Jellyfin, you first need to ensure that the playlist exists.
+To import a playlist into Jellyfin, follow these steps to ensure the playlist is properly set up:
 
 - Create empty playlist using [Sonixd](https://github.com/jeffvli/sonixd).
 - Navigate to Jellyfin's music section, then go to the Playlist tab and click on the new empty playlist. In the URL, locate the playlist ID, which should appear like this: id=5197ca8074c325d7e5882b0b1b2f0545.
 - Obtain your user ID by visiting your profile. Click your avatar in the top-right corner and select "Profile." In the URL, look for userId=f1c88706d5164400b2ab94a865be072.
-- Generate a new API Key by going to Administration > API Keys in the Admin panel.
+- Generate a new API Key by going to API Keys in the Admin panel.
 
-Run the following command to import the playlist:
+#### To import tracks to an existing playlist, execute the following command:
 ```sh
 ./jellyfin_playlist.sh <input_file> <playlist_id> <host> <userid> <apikey>
 ```
+
+#### To create a new playlist and import tracks, run the following command:
+```sh
+./jellyfin_playlist.sh <input_file> "" <host> <userid> <apikey>
+```
+
 Example
 ```sh
 ./jellyfin_playlist_import.sh Rock.m3u8 5197ca8074c325d7e5882b0b1b2f0545 example.com f1c88706d5164400b2ab94a865be072 0050cbe10cf149e000dd8b18c623c780
