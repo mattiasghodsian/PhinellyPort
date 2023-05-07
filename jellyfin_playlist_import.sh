@@ -65,6 +65,7 @@ playlist_status=$(curl -s -o /dev/null -w "%{http_code}" "${playlist_url}")
 if [ "${playlist_status}" -eq 200 ]; then
 
     item_ids=()
+    echo "Playlist: $playlist_name | $playlist_id"
 
     while IFS= read -r media_file; do
         if [[ "$media_file" != \#* ]]; then
