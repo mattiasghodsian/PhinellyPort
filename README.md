@@ -11,7 +11,7 @@
 
 ![image](https://user-images.githubusercontent.com/20265517/236677272-e58a3972-b4ae-494e-8533-a75a50b03a80.png)
 
-<p>⚠️ Please note the scripts are far from perfect, and some manual effort is required to import.</center>
+<center><p>⚠️ Please note the scripts are far from perfect, and some manual effort is required to import.</center>
 
 PhinellyPort is a collection of tools designed to enhance your media library experience, by offering playlist generation, duplicate file removal outside of Jellyfin media server, and seamless integration with Jellyfin through its API for importing playlists.
 
