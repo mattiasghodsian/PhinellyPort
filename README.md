@@ -18,6 +18,8 @@ PhinellyPort is a collection of tools designed to enhance your media library exp
 ## How to
 Generating temporary m3u8 files from a directory that contains audio files. The generated m3u8 files will be saved in the terminal's current working directory.
 
+<center><p>⚠️ Some scripts requires ffmpeg on your system to work.</p></center>
+
 ### For Directories with Subdirectories
 Use the following command for generating m3u8 files from a directory that includes subdirectories:
 ```sh
