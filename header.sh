@@ -15,6 +15,6 @@ echo -e "\033[1m\033[32m
                              /____/           
                                                                         
 \033[0m"
-echo -e "\033[32m$(printf '%*s' $(((59/2)+10)) "PhinellyPort v1.2.0")\033[0m"
+echo -e "\033[32m$(printf '%*s' $(((59/2)+10)) "PhinellyPort v1.3.0")\033[0m"
 echo -e "\033[32m$(printf '%*s' $(((59/2)+24)) "https://github.com/mattiasghodsian/PhinellyPort")\033[0m"
 echo ""
